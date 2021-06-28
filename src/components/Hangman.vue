@@ -1,6 +1,15 @@
 <template>
   <div class="flex mx-auto mt-6 md:w-1/2">
-    <div class="hang-container relative w-full text-white flex flex-col items-center">
+    <div
+      class="
+        hang-container
+        relative
+        w-full
+        text-white
+        flex flex-col
+        items-center
+      "
+    >
       <h1 class="text-4xl text-center font-bold">Hangman</h1>
       <p class="desc mt-4 text-xl">Find the hidden word - Enter a letter</p>
       <div class="area mt-5 flex justify-between w-full">
@@ -139,7 +148,7 @@
           </div>
         </div>
         <div class="wrong mt-10 text-right">
-          <p class="text-base mb-3">Wrong</p>
+          <p v-if="getWrong.length" class="text-base mb-3">Wrong</p>
           <div class="flex">
             <p v-for="(letter, index) in getWrong" :key="index">
               <span v-if="index > 0">, </span>{{ letter }}
@@ -169,7 +178,13 @@
     </transition>
     <lose-modal v-if="gameOver" />
     <win-modal v-if="gameWon" />
-    <input class="invisible absolute bottom-0 left-0 md:hidden" ref="input" type="text" name="" id="">
+    <input
+      class="invisible absolute bottom-0 left-0 md:hidden"
+      ref="input"
+      type="text"
+      name=""
+      id=""
+    />
   </div>
 </template>
 
@@ -196,7 +211,7 @@ export default {
       });
       document.querySelector(".man").children.forEach((part) => {
         part.classList.replace("block", "hidden");
-      })
+      });
     },
   },
   computed: {
