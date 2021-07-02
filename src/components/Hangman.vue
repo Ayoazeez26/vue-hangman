@@ -167,6 +167,47 @@
           </p>
         </div>
       </div>
+      <transition name="fade" mode="out-in">
+        <button
+          v-if="!viewHint"
+          class="absolute bottom-20 right-0 text-gray-700 bg-gray-200 px-3 py-2 rounded-md"
+          @click="toggleHint"
+        >
+          Hint
+        </button>
+        <div
+          v-if="viewHint"
+          class="
+            absolute
+            bottom-20
+            flex
+            items-center
+            right-0
+            text-white
+            font-semibold
+            text-xl
+          "
+        >
+          <p class="px-3 py-2">{{ getHint }}</p>
+          <a
+            class="
+              close-hint
+              bg-black
+              w-8
+              h-8
+              flex
+              items-center
+              justify-center
+              p-2
+              font-semibold
+              rounded-full
+            "
+            href="#"
+            @click="toggleHint"
+            >X</a
+          >
+        </div>
+      </transition>
     </div>
     <transition name="fade">
       <div
@@ -179,7 +220,7 @@
     <lose-modal v-if="gameOver" />
     <win-modal v-if="gameWon" />
     <input
-      class="invisible absolute bottom-0 left-0 md:hidden"
+      class="absolute bottom-0 border left-0"
       ref="input"
       type="text"
       name=""
@@ -191,7 +232,8 @@
 <script>
 import LoseModal from "./LoseModal.vue";
 import WinModal from "./WinModal.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   components: { LoseModal, WinModal },
   data() {
@@ -223,6 +265,8 @@ export default {
       "gameWon",
       "activeWord",
       "letterCount",
+      "getHint",
+      "viewHint",
     ]),
   },
   methods: {
@@ -251,6 +295,7 @@ export default {
         }
       }
     },
+    ...mapActions(["toggleHint"]),
   },
 };
 </script>
@@ -265,5 +310,8 @@ export default {
 .words {
   left: 50%;
   transform: translateX(-50%);
+}
+.close-hint {
+  font-family: sans-serif;
 }
 </style>

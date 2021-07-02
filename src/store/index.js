@@ -11,7 +11,19 @@ export default new Vuex.Store({
     selected: [],
     wrong: [],
     letterCount: "",
+    currentHint: "",
+    toggleHint: false,
     allWords: [3, 4, 5, 6, 7, 9, 10, 11],
+    hints: [
+      "A javascript framework",
+      "An infant",
+      "A phone brand",
+      "A social media app",
+      "A football club",
+      "modern day problem solver",
+      "A programming language",
+      "Using code to do stuff",
+    ],
     word_7: {
       c: [0],
       h: [1],
@@ -97,23 +109,37 @@ export default new Vuex.Store({
     letterCount: (state) => {
       return state.letterCount;
     },
+    getHint: (state) => {
+      return state.currentHint;
+    },
+    viewHint: (state) => {
+      return state.toggleHint;
+    },
   },
   mutations: {
     RESTARTGAME: (state) => {
       state.gameOver = false;
       state.gameWon = false;
+      state.toggleHint = false;
       state.selected = [];
       state.wrong = [];
       const arrayIndex = Math.floor(Math.random() * 8);
       const currentWord = state.allWords[arrayIndex];
+      let hint = state.hints[arrayIndex];
       if (state.letterCount < 7 && state.letterCount === currentWord) {
         state.letterCount++;
+        hint = state.hints[arrayIndex + 1];
+        state.currentHint = hint;
       } else if (state.letterCount === 7 && state.letterCount === currentWord) {
         state.letterCount--;
+        hint = state.hints[arrayIndex - 1];
+        state.currentHint = hint;
       } else {
         state.letterCount = currentWord;
+        state.currentHint = hint;
       }
       state.letterCount = currentWord;
+      state.currentHint = hint;
     },
     SAMELETTER: (state) => {
       state.sameLetter = !state.sameLetter;
@@ -134,6 +160,9 @@ export default new Vuex.Store({
         state.gameOver = !state.gameOver;
       }
     },
+    TOGGLEHINT: (state) => {
+      state.toggleHint = !state.toggleHint;
+    },
   },
   actions: {
     restartGame: (context) => {
@@ -147,6 +176,9 @@ export default new Vuex.Store({
     },
     addToWrong: (context, payload) => {
       context.commit("ADDTOWRONG", payload);
+    },
+    toggleHint: (context) => {
+      context.commit("TOGGLEHINT");
     },
   },
   modules: {},

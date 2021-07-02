@@ -41,7 +41,7 @@ body {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-  transform: translateY(56px);
+  transform: translateY(100px);
 }
 .fade-enter-to {
   transform: translateY(0);
