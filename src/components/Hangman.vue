@@ -157,20 +157,30 @@
         </div>
       </div>
       <div class="words absolute -bottom-10">
-        <div ref="first" class="first flex text-3xl">
-          <p
-            class="mx-1 border-b-2 border-blue-300 text-center w-6"
-            v-for="i in letterCount"
-            :key="i"
-          >
-            <span class="visible"></span>
-          </p>
+        <div class="relative">
+          <div ref="first" class="first flex text-3xl">
+            <p
+              class="mx-1 border-b-2 border-blue-300 text-center w-6"
+              v-for="i in letterCount"
+              :key="i"
+            >
+              <span class="visible"></span>
+            </p>
+          </div>
+          <input
+            class="absolute bottom-0 border-none bg-transparent left-0"
+            ref="input"
+            type="text"
+            name=""
+            id=""
+          />
         </div>
+        
       </div>
       <transition name="fade" mode="out-in">
         <button
           v-if="!viewHint"
-          class="absolute bottom-20 right-0 text-gray-700 bg-gray-200 px-3 py-2 rounded-md"
+          class="absolute bottom-20 border-none right-0 text-gray-700 bg-gray-200 px-3 py-2 rounded-md"
           @click="toggleHint"
         >
           Hint
@@ -219,13 +229,6 @@
     </transition>
     <lose-modal v-if="gameOver" />
     <win-modal v-if="gameWon" />
-    <input
-      class="absolute bottom-0 border left-0"
-      ref="input"
-      type="text"
-      name=""
-      id=""
-    />
   </div>
 </template>
 
@@ -313,5 +316,12 @@ export default {
 }
 .close-hint {
   font-family: sans-serif;
+}
+input:focus {
+  outline: #34495e;
+}
+input {
+  caret-color: transparent;
+  color: transparent;
 }
 </style>
