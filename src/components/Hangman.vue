@@ -247,7 +247,7 @@ export default {
     this.$store.dispatch("restartGame");
   },
   mounted() {
-    this.$refs.input.focus();
+    this.$refs.input.onkeyup = this.onkeyup;
   },
   watch: {
     letterCount: () => {
