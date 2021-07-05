@@ -296,6 +296,7 @@ export default {
         } else {
           this.$store.dispatch("sameLetter");
         }
+        this.$refs.input.value = "";
       }
     },
     onkeyup(e) {
