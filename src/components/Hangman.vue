@@ -168,19 +168,39 @@
             </p>
           </div>
           <input
-            class="absolute md:hidden bottom-0 border-none bg-transparent left-0"
+            class="
+              fixed
+              md:hidden
+              w-screen
+              h-screen
+              top-0
+              left-0
+              border-none
+              bg-transparent
+              left-0
+            "
             ref="input"
             type="text"
             name=""
+            v-model="hangInput"
             id=""
           />
         </div>
-        
       </div>
       <transition name="fade" mode="out-in">
         <button
           v-if="!viewHint"
-          class="absolute bottom-20 border-none right-0 text-gray-700 bg-gray-200 px-3 py-2 rounded-md"
+          class="
+            absolute
+            bottom-20
+            border-none
+            right-0
+            text-gray-700
+            bg-gray-200
+            px-3
+            py-2
+            rounded-md
+          "
           @click="toggleHint"
         >
           Hint
@@ -240,7 +260,9 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   components: { LoseModal, WinModal },
   data() {
-    return {};
+    return {
+      hangInput: "",
+    };
   },
   created() {
     document.onkeydown = this.onkeydown;
@@ -296,7 +318,6 @@ export default {
         } else {
           this.$store.dispatch("sameLetter");
         }
-        this.$refs.input.value = "";
       }
     },
     onkeyup(e) {
@@ -312,15 +333,18 @@ export default {
             this.activeWord[letter].forEach((index) => {
               this.$refs.first.children[index].children[0].innerText = letter;
             });
+            this.hangInput = "";
           } else {
             this.$store.dispatch("addToWrong", letter);
             this.$refs[`man-${this.getWrong.length}`].classList.replace(
               "hidden",
               "block"
             );
+            this.hangInput = "";
           }
         } else {
           this.$store.dispatch("sameLetter");
+          this.hangInput = "";
         }
       }
     },
@@ -338,6 +362,8 @@ export default {
 }
 .words {
   left: 50%;
+}
+.first {
   transform: translateX(-50%);
 }
 .close-hint {
