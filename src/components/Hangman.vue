@@ -301,7 +301,7 @@ export default {
     onkeyup(e) {
       console.log(e);
       if (e.data.toLowerCase() != e.data.toUpperCase()) {
-        const letter = e.key.toLowerCase();
+        const letter = e.data.toLowerCase();
         if (
           !this.getSelected.includes(letter) &&
           !this.getWrong.includes(letter)
