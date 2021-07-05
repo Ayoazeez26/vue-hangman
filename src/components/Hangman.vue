@@ -168,7 +168,7 @@
             </p>
           </div>
           <input
-            class="absolute bottom-0 border-none bg-transparent left-0"
+            class="absolute md:hidden bottom-0 border-none bg-transparent left-0"
             ref="input"
             type="text"
             name=""
@@ -247,7 +247,7 @@ export default {
     this.$store.dispatch("restartGame");
   },
   mounted() {
-    this.$refs.input.onkeydown = this.onkeydown;
+    this.$refs.input.oninput = this.onkeyup;
   },
   watch: {
     letterCount: () => {
@@ -274,8 +274,33 @@ export default {
   },
   methods: {
     onkeydown(e) {
-      console.log(Object.keys(this.activeWord).length);
+      console.log(e);
       if (e.which >= 65 && e.which <= 90) {
+        const letter = e.key.toLowerCase();
+        if (
+          !this.getSelected.includes(letter) &&
+          !this.getWrong.includes(letter)
+        ) {
+          if (this.activeWord[letter]) {
+            this.$store.dispatch("addToSelected", letter);
+            this.activeWord[letter].forEach((index) => {
+              this.$refs.first.children[index].children[0].innerText = letter;
+            });
+          } else {
+            this.$store.dispatch("addToWrong", letter);
+            this.$refs[`man-${this.getWrong.length}`].classList.replace(
+              "hidden",
+              "block"
+            );
+          }
+        } else {
+          this.$store.dispatch("sameLetter");
+        }
+      }
+    },
+    onkeyup(e) {
+      console.log(e);
+      if (e.data.toLowerCase() != e.data.toUpperCase()) {
         const letter = e.key.toLowerCase();
         if (
           !this.getSelected.includes(letter) &&
