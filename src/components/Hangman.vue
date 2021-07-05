@@ -243,11 +243,11 @@ export default {
     return {};
   },
   created() {
-    document.onkeyup = this.onkeyup;
+    document.onkeydown = this.onkeydown;
     this.$store.dispatch("restartGame");
   },
   mounted() {
-    this.$refs.input.onkeyup = this.onkeyup;
+    this.$refs.input.onkeydown = this.onkeydown;
   },
   watch: {
     letterCount: () => {
@@ -273,7 +273,7 @@ export default {
     ]),
   },
   methods: {
-    onkeyup(e) {
+    onkeydown(e) {
       console.log(Object.keys(this.activeWord).length);
       if (e.which >= 65 && e.which <= 90) {
         const letter = e.key.toLowerCase();
