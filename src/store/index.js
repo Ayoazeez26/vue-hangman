@@ -10,6 +10,7 @@ export default new Vuex.Store({
     gameWon: false,
     selected: [],
     wrong: [],
+    score: 0,
     letterCount: "",
     currentHint: "",
     toggleHint: false,
@@ -115,6 +116,9 @@ export default new Vuex.Store({
     viewHint: (state) => {
       return state.toggleHint;
     },
+    getScore: (state) => {
+      return state.score;
+    },
   },
   mutations: {
     RESTARTGAME: (state) => {
@@ -152,12 +156,18 @@ export default new Vuex.Store({
       const generated = `word_${state.letterCount}`;
       if (state.selected.length === Object.keys(state[generated]).length) {
         state.gameWon = !state.gameWon;
+        state.score++;
       }
     },
     ADDTOWRONG: (state, payload) => {
       state.wrong.push(payload);
       if (state.wrong.length === 6) {
         state.gameOver = !state.gameOver;
+        if (state.score === 0) {
+          state.score = 0;
+        } else {
+          state.score--;
+        }
       }
     },
     TOGGLEHINT: (state) => {

@@ -10,7 +10,27 @@
         items-center
       "
     >
-      <h1 class="text-4xl text-center font-bold">Hangman</h1>
+      <div class="header flex w-full justify-center items-center">
+        <h1 class="text-4xl text-center font-bold">Hangman</h1>
+        <div
+          class="
+            scoreboard
+            flex flex-col
+            items-center
+            bg-white
+            rounded-lg
+            py-2
+            h-full
+            w-20
+            ml-5
+          "
+        >
+          <p class="uppercase text-xs md:text-sm">score</p>
+          <p class="score text-4xl md:text-5xl font-bold">
+            {{ getScore ? getScore : 0 }}
+          </p>
+        </div>
+      </div>
       <p class="desc mt-4 text-xl">Find the hidden word - Enter a letter</p>
       <div class="area mt-5 flex justify-between w-full">
         <div class="flex md:self-start">
@@ -310,6 +330,7 @@ export default {
       "letterCount",
       "getHint",
       "viewHint",
+      "getScore",
     ]),
   },
   methods: {
@@ -376,6 +397,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.scoreboard > p {
+  color: #34495e;
+}
 .err {
   left: 50%;
   transform: translateX(-50%);
