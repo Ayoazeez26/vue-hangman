@@ -187,6 +187,23 @@
           />
         </div>
       </div>
+      <a
+        href="https://www.youtube.com/watch?v=cGOeiQfjYPk"
+        target="_blank"
+        class="
+          absolute
+          bottom-40
+          border-none
+          right-0
+          text-gray-700
+          bg-gray-200
+          px-3
+          py-2
+          rounded-md
+        "
+      >
+        How to Play
+      </a>
       <transition name="fade" mode="out-in">
         <button
           v-if="!viewHint"
