@@ -342,27 +342,55 @@ export default {
       console.log(e);
       if (e.data.toLowerCase() != e.data.toUpperCase()) {
         const letter = e.data.toLowerCase();
-        if (
-          !this.getSelected.includes(letter) &&
-          !this.getWrong.includes(letter)
-        ) {
-          if (this.activeWord[letter]) {
-            this.$store.dispatch("addToSelected", letter);
-            this.activeWord[letter].forEach((index) => {
-              this.$refs.first.children[index].children[0].innerText = letter;
-            });
-            this.hangInput = "";
+        if (letter.length > 1) {
+          const letterArr = letter.split("");
+          const finalLetter = letterArr.pop();
+          if (
+            !this.getSelected.includes(finalLetter) &&
+            !this.getWrong.includes(finalLetter)
+          ) {
+            if (this.activeWord[finalLetter]) {
+              this.$store.dispatch("addToSelected", finalLetter);
+              this.activeWord[finalLetter].forEach((index) => {
+                this.$refs.first.children[index].children[0].innerText =
+                  finalLetter;
+              });
+              this.hangInput = "";
+            } else {
+              this.$store.dispatch("addToWrong", finalLetter);
+              this.$refs[`man-${this.getWrong.length}`].classList.replace(
+                "hidden",
+                "block"
+              );
+              this.hangInput = "";
+            }
           } else {
-            this.$store.dispatch("addToWrong", letter);
-            this.$refs[`man-${this.getWrong.length}`].classList.replace(
-              "hidden",
-              "block"
-            );
+            this.$store.dispatch("sameLetter");
             this.hangInput = "";
           }
         } else {
-          this.$store.dispatch("sameLetter");
-          this.hangInput = "";
+          if (
+            !this.getSelected.includes(letter) &&
+            !this.getWrong.includes(letter)
+          ) {
+            if (this.activeWord[letter]) {
+              this.$store.dispatch("addToSelected", letter);
+              this.activeWord[letter].forEach((index) => {
+                this.$refs.first.children[index].children[0].innerText = letter;
+              });
+              this.hangInput = "";
+            } else {
+              this.$store.dispatch("addToWrong", letter);
+              this.$refs[`man-${this.getWrong.length}`].classList.replace(
+                "hidden",
+                "block"
+              );
+              this.hangInput = "";
+            }
+          } else {
+            this.$store.dispatch("sameLetter");
+            this.hangInput = "";
+          }
         }
       }
     },
