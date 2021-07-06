@@ -192,7 +192,8 @@
         target="_blank"
         class="
           absolute
-          bottom-40
+          bottom-32
+          md:bottom-40
           border-none
           right-0
           text-gray-700
