@@ -14,6 +14,7 @@ export default new Vuex.Store({
     letterCount: "",
     currentHint: "",
     toggleHint: false,
+    gameRound: 0,
     allWords: [3, 4, 5, 6, 7, 9, 10, 11],
     hints: [
       "A javascript framework",
@@ -119,6 +120,9 @@ export default new Vuex.Store({
     getScore: (state) => {
       return state.score;
     },
+    gameRound: (state) => {
+      return state.gameRound;
+    },
   },
   mutations: {
     RESTARTGAME: (state) => {
@@ -127,6 +131,7 @@ export default new Vuex.Store({
       state.toggleHint = false;
       state.selected = [];
       state.wrong = [];
+      state.gameRound++; // Increment to force DOM recreation
       const arrayIndex = Math.floor(Math.random() * 8);
       const currentWord = state.allWords[arrayIndex];
       let hint = state.hints[arrayIndex];

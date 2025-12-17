@@ -178,11 +178,11 @@
       </div>
       <div class="words absolute -bottom-10">
         <div class="relative">
-          <div ref="first" class="first flex text-3xl">
+          <div ref="first" class="first flex text-3xl" :key="`word-${gameRound}-${letterCount}`">
             <p
               class="mx-1 border-b-2 border-blue-300 text-center w-6"
               v-for="i in letterCount"
-              :key="i"
+              :key="`letter-${gameRound}-${i}`"
             >
               <span class="visible"></span>
             </p>
@@ -310,32 +310,17 @@ export default {
     this.$refs.input.oninput = this.onkeyup;
   },
   watch: {
+    gameRound: function() {
+      // When game round changes (new game starts), ensure display is cleared
+      this.$nextTick(() => {
+        this.clearDisplay();
+      });
+    },
     letterCount: function() {
       // Clear all displayed letters when word changes
       this.$nextTick(() => {
         this.clearDisplay();
       });
-    },
-    getSelected: {
-      handler: function(newVal, oldVal) {
-        // When selected array is reset to empty (game restart), clear display
-        if (oldVal && oldVal.length > 0 && newVal && newVal.length === 0) {
-          this.$nextTick(() => {
-            this.clearDisplay();
-          });
-        }
-      },
-      deep: true
-    },
-    gameOver: function(newVal) {
-      if (newVal) {
-        this.clearDisplay();
-      }
-    },
-    gameWon: function(newVal) {
-      if (newVal) {
-        this.clearDisplay();
-      }
     },
   },
   computed: {
@@ -350,6 +335,7 @@ export default {
       "getHint",
       "viewHint",
       "getScore",
+      "gameRound",
     ]),
   },
   methods: {
