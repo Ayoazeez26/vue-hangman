@@ -310,13 +310,32 @@ export default {
     this.$refs.input.oninput = this.onkeyup;
   },
   watch: {
-    letterCount: () => {
-      document.querySelector(".first").children.forEach((child) => {
-        child.children[0].innerText = " ";
+    letterCount: function() {
+      // Clear all displayed letters when word changes
+      this.$nextTick(() => {
+        this.clearDisplay();
       });
-      document.querySelector(".man").children.forEach((part) => {
-        part.classList.replace("block", "hidden");
-      });
+    },
+    getSelected: {
+      handler: function(newVal, oldVal) {
+        // When selected array is reset to empty (game restart), clear display
+        if (oldVal && oldVal.length > 0 && newVal && newVal.length === 0) {
+          this.$nextTick(() => {
+            this.clearDisplay();
+          });
+        }
+      },
+      deep: true
+    },
+    gameOver: function(newVal) {
+      if (newVal) {
+        this.clearDisplay();
+      }
+    },
+    gameWon: function(newVal) {
+      if (newVal) {
+        this.clearDisplay();
+      }
     },
   },
   computed: {
@@ -334,6 +353,23 @@ export default {
     ]),
   },
   methods: {
+    clearDisplay() {
+      // Clear all displayed letters
+      if (this.$refs.first && this.$refs.first.children) {
+        this.$refs.first.children.forEach((child) => {
+          if (child.children && child.children[0]) {
+            child.children[0].innerText = "";
+          }
+        });
+      }
+      // Reset hangman drawing
+      for (let i = 1; i <= 6; i++) {
+        const manPart = this.$refs[`man-${i}`];
+        if (manPart) {
+          manPart.classList.replace("block", "hidden");
+        }
+      }
+    },
     onkeydown(e) {
       console.log(e);
       if (e.which >= 65 && e.which <= 90) {
